@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:googlemapsinflutter/ui/custom_search_view.dart';
 
 import 'locations.dart';
 
@@ -51,10 +52,28 @@ class _MyAppState extends State<MyApp> {
           title: Text('Maps Sample App'),
           backgroundColor: Colors.green[700],
         ),
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          markers: _markers.values.toSet(),
-          initialCameraPosition: CameraPosition(target: _center, zoom: 16.0),
+        body: Stack(
+          children: <Widget>[
+            GoogleMap(
+              onMapCreated: _onMapCreated,
+              markers: _markers.values.toSet(),
+              initialCameraPosition: CameraPosition(target: _center, zoom: 16.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                    children: <Widget>[
+                      SearchView(
+                        searchResults: (String result) {
+                          print("search result is $result");
+                        },
+                      ),
+                    ],
+                  )),
+            ),
+          ],
         ),
       ),
     );
